@@ -14,10 +14,10 @@ export default class App extends Component {
   componentDidMount(){
     fetch("https://morning-mesa-23625.herokuapp.com/songs")
     .then(res => res.json())
-    .then(songs => {
-      console.log(songs[0]);
+    .then(sngs => {
+      console.log(sngs[0]);
       this.setState({
-        songs : this.state.songs.cloneWithRows(songs)
+        songs : this.state.songs.cloneWithRows(sngs)
       })
     })
   }

@@ -7,7 +7,7 @@ export default class App extends Component {
     super();
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows([{_id: "58ef743d6aad9c0011debb33", artist: "Taylor Swift", songName: "Bad Blood", votes: 29 }, {_id: "58f00343f7c2c400118b806d", artist: "metallica", songName: "seek and destroy", votes: 19 }, {_id: "58f19b5eedcfce0011321a12", artist: "Methodman and Redman", songName: "Whateva Man", votes: 0 }]),
+      dataSource: ds.cloneWithRows([{_id: "58ef743d6aad9c0011debb33", artist: "Taylor Swift", songName: "Bad Blood", votes: 29 }, {_id: "58f00343f7c2c400118b806d", artist: "metallica", songName: "seek and destroy", votes: 19 }, {_id: "58f19b5eedcfce0011321a12", artist: "Methodman and Redman", songName: "Whateva Man", votes: 0 }, {_id: "58f19b5eedcfce0011321a12", artist: "Ozzy Osbourne", songName: "Bark at the Moon", votes: 100 }]),
     };
   }
   

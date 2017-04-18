@@ -32,7 +32,7 @@ export default class App extends Component {
         <Text>Changes you make will automatically reload.</Text>
         <Text>Shake your phone to open the developer menu.</Text>
         
-        <Text>Artist from state: {this.state.artist}</Text>
+        <Text>Artist from state: {this.state.artist.split('').reverse().join('')}</Text>
         <Text>Song from state: {this.state.song}</Text>
 
         
@@ -40,7 +40,7 @@ export default class App extends Component {
         <TextInput
           style={{ width: 200, height: 44, padding: 8 }}
           defaultValue="artist"
-          onChangeText={(text) => this.setState({artist: text})}
+          onChangeText={(artist) => this.setState({artist})}
         />
         
         <TextInput
