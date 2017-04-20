@@ -40,9 +40,7 @@ export default class App extends Component {
     .then(savedSong => {
       let songsUpdated = [...this.state.songs._dataBlob.s1, savedSong];
       this.setState({
-        songs : this.state.songs.cloneWithRows(songsUpdated),
-        song: "",
-        artist: ""
+        songs : this.state.songs.cloneWithRows(songsUpdated)
       })
     })
   };
@@ -61,10 +59,36 @@ export default class App extends Component {
       let songsUpdated = this.state.songs._dataBlob.s1.filter((song, i) => song._id !== oldSongId)
       console.log('deleted id ', oldSongId)
       this.setState({
-        songs : this.state.songs.cloneWithRows(songsUpdated),
+        songs : this.state.songs.cloneWithRows(songsUpdated)
       });
     })
   };
+  
+  /*
+  function _handleVote(_id, direction) {
+  
+  }
+  */
+  _handleVote = (_id, direction) => {
+    console.log(_id, direction);
+    
+    return fetch(`https://morning-mesa-23625.herokuapp.com/songs/votes/${_id}/${direction}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(editedSong => {
+      let songsUpdated = this.state.songs._dataBlob.s1.map(sng => {
+        return editedSong._id == sng._id ? editedSong : sng
+      });
+      
+      this.setState({
+        songs : this.state.songs.cloneWithRows(songsUpdated)
+      });
+    })
+  }
 
   render() {
     return (
@@ -79,18 +103,15 @@ export default class App extends Component {
 
         
         <Text style={styles.heading}>Add a New Song</Text>
-        
         <TextInput
           style={{ width: 200, height: 44, padding: 8 }}
-          placeholder="Artist"
-          value={this.state.artist}
+          defaultValue="artist"
           onChangeText={(text) => this.setState({artist: text})}
         />
         
         <TextInput
           style={{ width: 200, height: 44, padding: 8 }}
-          value={this.state.song}
-          placeholder="Song"
+          defaultValue="song"
           onChangeText={(text) => this.setState({song: text})}
         />
         
@@ -106,12 +127,20 @@ export default class App extends Component {
         
         <Text style={styles.item}>Artist: {song.artist} | Song: {song.songName} | Votes: {song.votes}</Text>
         
+        <Button
+          title="Up Vote"
+          onPress={() => this._handleVote(song._id, 'up')}
+        />
+        
+        <Button
+          title="Down Vote"
+          onPress={() => this._handleVote(song._id, 'down')}
+        />
         
         <Button
           title="Delete"
           onPress={() => this._handleDelete(song._id)}
         />
-      
         
         </View>}
       />
