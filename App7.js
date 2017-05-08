@@ -263,6 +263,8 @@ export default class App extends Component {
                 }}
               />
 
+              
+
               <Button title="Edit" onPress={() => this._handleEdit(song._id)} />
 
               <Button

@@ -12,6 +12,9 @@ import { Constants, Audio } from "expo";
 export default class App extends Component {
   constructor() {
     super();
+    
+    this.sound = '';
+    
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
@@ -157,9 +160,14 @@ export default class App extends Component {
         });
       });
   };
+  
+  _handleStopSoundAsync = () => {
+    if (this.sound != ''){
+      this.sound.stopAsync();
+    }
+  }
 
   _handlePlaySoundAsync = _id => {
-    let sound;
     return fetch(`https://morning-mesa-23625.herokuapp.com/songs/${_id}`)
       .then(res => res.json())
       .then(song => {
@@ -172,19 +180,19 @@ export default class App extends Component {
         return spotifyInfo;
       })
       .then(spotifyInfo => {
-        sound = new Audio.Sound({
+        this.sound = new Audio.Sound({
           source: spotifyInfo[0].previewSong
         });
-        return sound;
+        return this.sound;
       })
       .then(() => {
         return Audio.setIsEnabledAsync(true);
       })
       .then(() => {
-        return sound.loadAsync();
+        return this.sound.loadAsync();
       })
       .then(() => {
-        return sound.playAsync();
+        return this.sound.playAsync();
       });
   };
 
@@ -261,6 +269,11 @@ export default class App extends Component {
                 onPress={() => {
                   this._handlePlaySoundAsync(song._id);
                 }}
+              />
+              
+              <Button
+                title="Stop this sound!"
+                onPress={this._handleStopSoundAsync}
               />
 
               <Button title="Edit" onPress={() => this._handleEdit(song._id)} />
